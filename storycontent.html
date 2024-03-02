@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning Content Search</title>
+  <style>
+    #search-container {
+      margin-bottom: 20px;
+    }
+
+    #search-input {
+      width: 200px;
+      padding: 5px;
+      font-size: 16px;
+    }
+
+    #search-button {
+      padding: 6px 10px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .search-result {
+      margin-bottom: 10px;
+    }
+
+    .search-result img {
+      width: 100px;
+      height: auto;
+    }
+
+    .schedule-button {
+      padding: 6px 10px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="search-container">
+    <input type="text" id="search-input" placeholder="Search for content...">
+    <button id="search-button">Search</button>
+  </div>
+
+  <div id="search-results"></div>
+
+  <script>
+    const contentData = [
+      { title: 'Video 1', type: 'video', thumbnailUrl: 'https://via.placeholder.com/100' },
+      { title: 'Audio 1', type: 'audio', thumbnailUrl: 'https://via.placeholder.com/100' },
+      { title: 'PDF 1', type: 'pdf', thumbnailUrl: 'https://via.placeholder.com/100' }
+    ];
+
+    document.getElementById('search-button').addEventListener('click', function() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      const filteredContent = contentData.filter(content => content.title.toLowerCase().includes(searchTerm));
+
+      const searchResultsContainer = document.getElementById('search-results');
+      searchResultsContainer.innerHTML = '';
+
+      filteredContent.forEach(result => {
+        const resultElement = document.createElement('div');
+        resultElement.classList.add('search-result');
+
+        resultElement.innerHTML = `
+          <img src="${result.thumbnailUrl}" alt="Thumbnail">
+          <p>${result.title}</p>
+          <button class="schedule-button">Schedule Session</button>
+        `;
+
+        searchResultsContainer.appendChild(resultElement);
+      });
+
+      // Bind click event to schedule buttons
+      document.querySelectorAll('.schedule-button').forEach(button => {
+        button.addEventListener('click', function() {
+          // Perform scheduling logic here
+          console.log('Schedule session for: ', button.parentElement.querySelector('p').textContent);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
